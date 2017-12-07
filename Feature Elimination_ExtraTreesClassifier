@@ -18,3 +18,18 @@ Y=d[target_column]
 model.fit(X,Y)
 fi=model.feature_importances_
 print(fi)
+
+# To drop column 4,6 and 7 which were least ranked as per rfe
+X.drop(X.columns[[0,3,4,5,8]], axis=1, inplace=True)
+#print(X)
+
+
+X_train,X_test,Y_train,Y_test = train_test_split(X,Y,test_size = 0.20, random_state = 20)
+
+#Random Forest
+clf = RandomForestClassifier()
+clf.fit(X_train,Y_train)
+predict = clf.predict(X_test)
+cf = confusion_matrix(predict,Y_test)
+print(cf)
+print(accuracy_score(predict,Y_test))
