@@ -1,0 +1,26 @@
+from sklearn import linear_model
+from sklearn import datasets,metrics
+from sklearn.ensemble import ExtraTreesClassifier
+import pandas as pd
+import numpy as np
+from sklearn.feature_selection import RFE
+from sklearn.linear_model import LogisticRegression
+d=pd.read_csv('C:/Users/Nikita Juyal/Desktop/ML Assignment/winequality-red.csv')
+#model=ExtraTreesClassifier()
+model = LogisticRegression()
+
+train_column=['fixed acidity','volatile acidity','citric acid','residual sugar','chlorides','free sulfur dioxide','total sulfur dioxide','density','pH','sulphates','alcohol']
+target_column=['quality']
+
+X=d[train_column]
+Y=d[target_column]
+
+#model.fit(X,Y)
+#fi=model.feature_importances_
+#print(fi)
+#As per FI,most important feature is Alcohol,second is Sulphates followed closely by Total Sulphur Dioxide
+rfe=RFE(model,5)
+rfe=rfe.fit(X,Y)
+print(rfe.support_)
+print(rfe.ranking_)
+#As per Recursive Feature Elimination, most important - Sulphates, pH, Density,volatile acidity and chlorides.2- citric acid.3- alcohol, 4-fixed acidity
